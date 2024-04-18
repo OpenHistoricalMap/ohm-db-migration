@@ -1,0 +1,96 @@
+environment: staging
+cloudProvider: aws
+AWS_S3_BUCKET: s3://staging
+serviceType: NodePort
+domain: staging.openhistoricalmap.org
+adminEmail: ohm-admins@ohm.com
+db:
+  enabled: true
+  image:
+    name: rub21/postgres-14
+    tag: v1
+  nodeSelector:
+    enabled: true
+    label_key: nodegroup_type
+    label_value: db
+  env:
+    POSTGRES_DB: ${POSTGRES_DB}
+    POSTGRES_USER: ${POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  persistenceDisk:
+    enabled: false
+    accessMode: ReadWriteOnce
+    mountPath: /var/lib/postgresql/data
+    subPath: postgresql-db
+    AWS_ElasticBlockStore_volumeID: vol-07a175d4e92732c16
+    AWS_ElasticBlockStore_size: 200Gi
+  resources:
+    enabled: false
+    requests:
+      memory: "10Gi"
+      cpu: "5"
+    limits:
+      memory: "10Gi"
+      cpu: "5"
+  sharedMemorySize: 256Mi
+  livenessProbeExec: true
+dbBackupRestore:
+  cronjobs:
+    - name: web-db
+      enabled: true
+      schedule: '0 0 * * *'
+      env:
+        DB_ACTION: restore
+        RESTORE_URL_FILE: ${RESTORE_URL_FILE}
+      resources:
+        enabled: false
+      nodeSelector:
+        enabled: true
+        label_key: nodegroup_type
+        label_value: job
+populateApidb:
+  enabled: false
+web:
+  enabled: false
+memcached:
+  enabled: false
+planetDump:
+  enabled: false
+fullHistory:
+  enabled: false
+idEditor:
+  enabled: false
+replicationJob:
+  enabled: false
+tilerDb:
+  enabled: false
+tilerImposm:
+  enabled: false
+tilerServer:
+  enabled: false
+tilerServerCacheCleaner:
+  enabled: false
+tilerVisor:
+  enabled: false
+tmApi:
+  enabled: false
+nominatimApi:
+  enabled: false
+overpassApi:
+  enabled: false
+taginfo:
+  enabled: false
+osmSimpleMetrics:
+  enabled: false
+monitoringReplication:
+  enabled: false
+changesetReplicationJob:
+  enabled: false
+osmchaWeb:
+  enabled: false
+osmchaApi:
+  enabled: false
+osmchaDb:
+  enabled: false
+planetFiles:
+  enabled: false
