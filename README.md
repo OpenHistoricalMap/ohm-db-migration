@@ -17,9 +17,9 @@ export ENVIROMENT=staging
 export EBS_DISK_SIZE=200
 export POSTGRES_DB=db
 export POSTGRES_PASSWORD=abc
-export POSTGRES_USER=user
-export PGUSER=user
-export RESTORE_URL_FILE="https://osm-seed.sql.gz"
+export POSTGRES_USER=xyz
+export PGUSER=xyz
+export RESTORE_URL_FILE="https://osmseed-production-db.s3.us-east-1.amazonaws.com/database/db.sql.gz"
 ```
 
 ## Creating the EBS disk

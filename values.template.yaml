@@ -3,7 +3,7 @@ cloudProvider: aws
 AWS_S3_BUCKET: s3://staging
 serviceType: NodePort
 domain: staging.openhistoricalmap.org
-adminEmail: ohm-admins@ohm.com
+adminEmail: ohm-admins@ohm.org
 db:
   enabled: true
   image:
@@ -17,12 +17,21 @@ db:
     POSTGRES_DB: ${POSTGRES_DB}
     POSTGRES_USER: ${POSTGRES_USER}
     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # POSTGRES_DB_MAX_CONNECTIONS: 150
+    # POSTGRES_DB_SHARED_BUFFERS: 256MB
+    # POSTGRES_DB_TEMP_BUFFERS: 32MB
+    # POSTGRES_DB_WORK_MEM: 16MB
+    # POSTGRES_DB_MAINTENANCE_WORK_MEM: 256MB
+    # POSTGRES_DB_EFFECTIVE_CACHE_SIZE: 8GB
+    # POSTGRES_DB_MAX_WAL_SIZE: 32MB
+    # POSTGRES_DB_MIN_WAL_SIZE: 16MB
+    # POSTGRES_DB_RANDOM_PAGE_COST: 2.0
   persistenceDisk:
-    enabled: false
+    enabled: true
     accessMode: ReadWriteOnce
     mountPath: /var/lib/postgresql/data
     subPath: postgresql-db
-    AWS_ElasticBlockStore_volumeID: vol-07a175d4e92732c16
+    AWS_ElasticBlockStore_volumeID: vol-08e9a73c3c0f2855c
     AWS_ElasticBlockStore_size: 200Gi
   resources:
     enabled: false
@@ -47,7 +56,7 @@ dbBackupRestore:
       nodeSelector:
         enabled: true
         label_key: nodegroup_type
-        label_value: job
+        label_value: web
 populateApidb:
   enabled: false
 web:
