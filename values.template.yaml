@@ -1,14 +1,14 @@
-environment: staging
+environment: production
 cloudProvider: aws
-AWS_S3_BUCKET: s3://staging
+AWS_S3_BUCKET: s3://production
 serviceType: NodePort
-domain: staging.openhistoricalmap.org
+domain: openhistoricalmap.org
 adminEmail: ohm-admins@ohm.org
 db:
   enabled: true
   image:
     name: rub21/postgres-14
-    tag: v1
+    tag: v3
   nodeSelector:
     enabled: true
     label_key: nodegroup_type
@@ -17,22 +17,13 @@ db:
     POSTGRES_DB: ${POSTGRES_DB}
     POSTGRES_USER: ${POSTGRES_USER}
     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    # POSTGRES_DB_MAX_CONNECTIONS: 150
-    # POSTGRES_DB_SHARED_BUFFERS: 256MB
-    # POSTGRES_DB_TEMP_BUFFERS: 32MB
-    # POSTGRES_DB_WORK_MEM: 16MB
-    # POSTGRES_DB_MAINTENANCE_WORK_MEM: 256MB
-    # POSTGRES_DB_EFFECTIVE_CACHE_SIZE: 8GB
-    # POSTGRES_DB_MAX_WAL_SIZE: 32MB
-    # POSTGRES_DB_MIN_WAL_SIZE: 16MB
-    # POSTGRES_DB_RANDOM_PAGE_COST: 2.0
   persistenceDisk:
     enabled: true
     accessMode: ReadWriteOnce
     mountPath: /var/lib/postgresql/data
     subPath: postgresql-db
-    AWS_ElasticBlockStore_volumeID: vol-08e9a73c3c0f2855c
-    AWS_ElasticBlockStore_size: 200Gi
+    AWS_ElasticBlockStore_volumeID: vol-08e31c1930e00a478
+    AWS_ElasticBlockStore_size: 600Gi
   resources:
     enabled: false
     requests:
